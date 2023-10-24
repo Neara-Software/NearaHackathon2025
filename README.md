@@ -1,5 +1,5 @@
 # Example Robocode Tank Royale Bot
-This repository has an example bot written in Kotlin which is compatible with Java and the JVM, just with a nicer programming language.
+This repository has a skeleton of an example bot written in Java, with some basic logic and heuristics provided.
 It also has everything necessary to run as a host for a Robocode Tank Royale competition. So other bots can be packaged and dropped into the `bots` folder and it'll be picked up.
 
 Ensure that you are familiar with the rules and anatomy of a tank. They're important to understanding the limitations of your tank.
@@ -30,17 +30,17 @@ java -jar robocode-tankroyale-gui-0.19.2.jar
 
 
 ## Building a bot and submitting to host
-- Ensure that you set compatibility mode to JDK 11. You'll need to produce a jar file in the final deliverable
+- Ensure that you set compatibility mode to JDK 18. You'll need to produce a jar file in the final deliverable
 - Ensure that your bot includes a .json file with the same name as the jar. Example [here](./src/main/kotlin/org/example/BTreeBot.json). 
 - Ensure that you have a .sh file with the command that would execute the jar file. See example [here](./BTreeBot/BTreeBot.sh)
 
 Full instructions for the JVM is available in the official docs: https://robocode-dev.github.io/tank-royale/tutorial/jvm/my-first-bot-for-jvm.html
 
-To build your tank in Kotlin, you could use this repo as a template:
-1. In folder 'src/main/kotlin/org/example', add logic to 'BTreeBot.kt'.
+The easiest way to develop a bot would be to use the skeleton we have provided in this repo.
+1. In folder 'src/main/java/org/example', add logic to 'BTreeBot.java'.
 2. Compile:
 ```
-./gradlew shadowJar
+./gradlew packageBot
 ```
 The compiled BTreeBot.jar will be inside the BTreeBot folder. 
 
@@ -79,15 +79,13 @@ We'll run a series of rounds and use the scoring system built into Tank Royale t
 - Judging, scoring and winner announcements
 
 ## Scoring details
-Scoring will be done on several categories out of 10 by the Neara panel weighted accordingly to the following table:
-| Category         | Description                                                                                                                                                                        | Weight |
-|:---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |:------ |
-| Battle results   | Bot placing in Tank Royale. 10/10 for 1st place, 8/10 for second, 6/10 for third. Everyone else is 4/10                                                                            | 0.5    |
-| Bot modularity   | The easier it is to modify the behaviour of your bot, the more points you get. Coding best practices and principles apply. Think data structures, algorithms and code cleanliness. | 0.3    |
-| Code testability | How testable is your bot's code? Prove it with unit tests.                                                                                                                         | 0.2    |
 
+Scoring will be done based on placement during the final competition, based on number of rounds won. In the case of a
+tie, tiebreaker rounds will be run. Assume FFA style combat (multiple bots pitted against each other in a single round),
+instead of 1 vs 1 rounds.
 
 ## Requirements and references
-- JDK 18 for this repo. The bot should be compiled down to JDK 11 for the final jar.
+- JDK 18 for this repo. The bot should be compiled to JDK 18 for the final jar.
 - https://robocode-dev.github.io/tank-royale/articles/anatomy.html
 - https://github.com/robocode-dev/tank-royale
+- https://robowiki.net/wiki/Robocode/Game_Physics

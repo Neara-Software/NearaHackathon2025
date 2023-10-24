@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.8.0"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("java")
+    id("com.gradleup.shadow") version "9.1.0"
     application
 }
 
@@ -10,7 +10,7 @@ group = "org.example"
 version = "1.0-SNAPSHOT"
 
 application {
-    mainClass.set("org.example.BTreeBotKt")
+    mainClass.set("org.example.BTreeBot")
 }
 
 repositories {
@@ -20,32 +20,32 @@ repositories {
 dependencies {
     // https://mvnrepository.com/artifact/dev.robocode.tankroyale/robocode-tankroyale-bot-api
     implementation("dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.19.2")
+    // Add sources so lsp can index
+    implementation("dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.19.2:sources")
 
-    testImplementation(kotlin("test"))
+    // testImplementation(kotlin("test"))
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<ShadowJar> {
-    archiveFileName.set("BTreeBot.jar")
+// Invoke with ./gradlew packageBot
+tasks.register<Copy>("packageBot") {
+    dependsOn(tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>())
 
-    doLast {
-        copy {
-            from("src/main/kotlin/org/example/BTreeBot.json")
-            from("$buildDir/libs/BTreeBot.jar")
-            into("BTreeBot")
-        }
-    }
+    from("src/main/java/org/example/BTreeBot.json")
+    from(layout.buildDirectory.file("libs/BTreeBot.jar"))
 
+    into("BTreeBot")
 }
+
 
 tasks.clean {
     delete ("BTreeBot/BTreeBot.json")
     delete ("BTreeBot/BTreeBot.jar")
 }
 
-kotlin {
-    jvmToolchain(11)
-}
+// kotlin {
+//     jvmToolchain(11)
+// }

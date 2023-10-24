@@ -1,0 +1,9 @@
+{
+  "name": "Example Bot (Rename this)",
+  "version": "1.0",
+  "authors": ["Alice", "Bob", "Eve"],
+  "description": "Simple bot that runs and guns",
+  "countryCodes": ["au"],
+  "platform": "JVM",
+  "programmingLang": "Java 21"
+}
