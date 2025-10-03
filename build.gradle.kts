@@ -35,11 +35,12 @@ tasks.register<Copy>("packageBot") {
     dependsOn(tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>())
 
     from("src/main/java/org/example/BTreeBot.json")
-    from(layout.buildDirectory.file("libs/BTreeBot.jar"))
+    from(tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar").get().archiveFile) {
+        rename { "BTreeBot.jar" }
+    }
 
     into("BTreeBot")
 }
-
 
 tasks.clean {
     delete ("BTreeBot/BTreeBot.json")
